@@ -1,41 +1,30 @@
-# Nome do executável final
-EXEC = C:\Users\gabri\OneDrive\Área de Trabalho\SistemaDegerenciamentodeBibliotecas
 
-# Compilador e flags
-CXX = g++
-CXXFLAGS = -Wall -std=c++17
+DIR_OBJ = ./obj
+DIR_SRC = ./src
+DIR_BIN = ./bin
+DIR_INCLUDE = ./include
+DIR_LIB = ./lib
 
-# Diretórios
-SRC_DIR = src
-INC_DIR = include
-BUILD_DIR = build
-OUTPUT_DIR = bin
-DATA_DIR = data
+FLAGS = -O3 -Wall
+LIBS = -led -L $(DIR_LIB)
 
-# Arquivos fonte e objeto
-SRC_FILES = $(wildcard $(SRC_DIR)/*.cpp)
-OBJ_FILES = $(SRC_FILES:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
+all: libed apps run
 
-# Alvo padrão (compilar o projeto)
-all: $(EXEC)
+libed: functions.o main.o zip
 
-# Como compilar o executável
-$(EXEC): $(OBJ_FILES)
-	@mkdir -p $(OUTPUT_DIR)  # Cria a pasta output se não existir
-	$(CXX) $(OBJ_FILES) -o $(EXEC)
+%.o: $(DIR_SRC)/%.cpp $(DIR_INCLUDE)/utils.h
+	g++ $(FLAGS) -c $< -I $(DIR_INCLUDE)/ -o $(DIR_OBJ)/$@
 
-# Como compilar os arquivos objeto (.o)
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
-	@mkdir -p $(BUILD_DIR)  # Cria a pasta build se não existir
-	$(CXX) $(CXXFLAGS) -I$(INC_DIR) -c $< -o $@
 
-# Limpar os arquivos de build (objetos e executáveis)
+apps:
+	g++ $(FLAGS) $(DIR_OBJ)/main.o $(DIR_OBJ)/functions.o $(LIBS) -I $(DIR_INCLUDE)/ -o $(DIR_BIN)/apps.exe
+
+run:
+	$(DIR_BIN)/apps.exe
+	pause
+
+zip: 
+	ar -rcs $(DIR_LIB)/libed.a $(DIR_OBJ)/*.o 
+	
 clean:
-	rm -rf $(BUILD_DIR)/*.o $(EXEC)
-
-# Tarefa para rodar o programa
-run: $(EXEC)
-	./$(EXEC)
-
-# Alvos especiais
-.PHONY: all clean run
+	del -f obj\*.o bin\app2.exe *o lib\*.a
