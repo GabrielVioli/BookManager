@@ -15,3 +15,8 @@ using namespace std;
 void MakeFile() {
     ofstream File("data/library_data.txt");
 }
+
+void WriteFile(string x) {
+    fstream WriteFil("data/library_data.txt", std::ios::out);
+    WriteFil<<x;
+}
