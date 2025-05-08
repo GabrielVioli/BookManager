@@ -21,7 +21,6 @@ apps:
 
 run:
 	$(DIR_BIN)/apps.exe
-	pause
 
 zip: 
 	ar -rcs $(DIR_LIB)/libed.a $(DIR_OBJ)/*.o 
