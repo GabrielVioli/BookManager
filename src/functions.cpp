@@ -5,6 +5,7 @@
 #include <string>
 #include <windows.h>
 #include "utils.h"
+#include "globals.h"
 
 using namespace std;
 
@@ -14,6 +15,9 @@ using namespace std;
 //ifstream - leitura
 //ofstream - ediçao
 
+string type_it;
+string opt, opt_t;
+int opt_3;
 
 void WriteFile(string x) {
     fstream WriteFil("data/library_data.txt", std::ios::app);
@@ -51,3 +55,35 @@ string ListText() {
     inputFile.close();
     
 }
+
+void ShowMenu() {
+    cout<<"=======MENU PRINCIPAL=======\n[1] Adicionar\n[2] Remover\n[3] Listar\n[4] Sair\n";
+    cout<<"Opcao: "; cin>>opt_3;
+    cin.ignore();
+}
+
+void WriteMenu() {
+    if(opt_3 == 1) {
+        system("cls");
+        cout<<"titulo: ";
+        getline(cin, type_it);
+        WriteFile(type_it);
+    }
+}
+
+void RemoveShow() {
+    if(opt_3 == 2) {
+        system("cls");
+        cout<<"deseja apagar todo o conteudo:[S/N]: ";
+        cin>>opt;
+        cin.ignore();
+        CleanText(opt);
+    }
+}
+
+void listShow() {
+    if(opt_3 == 3) {
+        ListText();
+    }
+}
+

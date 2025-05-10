@@ -5,3 +5,7 @@
 void WriteFile(std::string x);
 void CleanText(std::string opt);
 std::string ListText();
+void ShowMenu();
+void WriteMenu();
+void RemoveShow();
+void listShow();
