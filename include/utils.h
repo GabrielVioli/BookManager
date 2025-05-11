@@ -9,3 +9,5 @@ void ShowMenu();
 void WriteMenu();
 void RemoveShow();
 void listShow();
+void menushowbook();
+void Showbook();
