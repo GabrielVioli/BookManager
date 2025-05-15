@@ -11,3 +11,5 @@ void RemoveShow();
 void listShow();
 void menushowbook();
 void Showbook();
+void removebook();
+void menuremovebook();

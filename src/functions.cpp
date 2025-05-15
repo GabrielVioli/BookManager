@@ -6,8 +6,11 @@
 #include <windows.h>
 #include "utils.h"
 #include "globals.h"
+#include <locale.h>
 
 using namespace std;
+
+
 
 //funcao de entrada
 //funcao de saida
@@ -99,6 +102,60 @@ void Showbook() {
 }
 
 
+void removebook() {
+    system("cls");
+    string filename = "data/library_data.txt";
+    ifstream file(filename);
+    vector<string> lines;
+    string bookremove, line;
+    bool bookfind = false;
+
+    if(!file) {
+        cerr<<"Erro ao abrir arquivo";
+    }
+
+    cout<<"digite o livro que deseja remover: "; getline(cin, bookremove);
+
+    while (getline(file, line)) {
+        if(line == "titulo: " + bookremove) {
+            cout<<line<<"\n";
+            bookfind = true;
+            for(int i = 0; i<3; i++) {
+                getline(file, line);
+                cout<<line<<"\n";
+            } 
+
+        } else {
+                lines.push_back(line);
+        }
+    }
+
+    if(!bookfind) {
+        cout<<"livro não encontrado\n";
+    }
+
+    // Reescrever o arquivo com as linhas restantes
+
+    ofstream outFile(filename);
+    if (!outFile) {
+        cerr << "Erro ao abrir o arquivo para escrita\n";
+        return;
+    }
+
+    for (const string ln : lines) {
+        outFile << ln << "\n";
+    }
+
+    outFile.close();
+    if(bookfind) {
+        cout << "Livro removido com sucesso!\n";
+    }
+    
+}
+
+
+
+
 void ShowMenu() {
     cout << "======== GERENCIAMENTO DE LIVROS ========\n";
     cout << "============= MENU PRINCIPAL ============\n";
@@ -106,7 +163,8 @@ void ShowMenu() {
     cout << "[2] Remover livro\n";
     cout << "[3] Listar todos os livros\n";
     cout << "[4] Mostrar livro especifico\n";
-    cout << "[5] Sair\n";
+    cout << "[5] Remover livro especifico\n";
+    cout << "[6] Sair\n";
     cout << "Opcao: "; 
     cin >> opt_3;
     cin.ignore();
@@ -152,4 +210,8 @@ void listShow() {
 
 void menushowbook() {
     Showbook();
+}
+
+void menuremovebook() {
+    removebook();
 }
